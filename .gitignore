@@ -3,3 +3,7 @@ db.sqlite3
 myvenv/
 static/
 media/
+*.pyc
+*~
+__pycache__
+.DS_Store
