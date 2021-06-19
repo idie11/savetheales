@@ -21,6 +21,6 @@ class UserLoginView(GenericAPIView):
         user = authenticate(request, username=username, password=password)
         if user:
             token = TokenModel.objects.get(user=user)
-            return Response({'​​​​​​​​key': token.key}​​​​​​​​, status=status.HTTP_201_CREATED)
+            return Response({'key': token.key}, status=status.HTTP_201_CREATED)
         return Response('invalid login', status=status.HTTP_401_UNAUTHORIZED)
 
