@@ -4,11 +4,11 @@ from rest_framework import status
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.response import Response
 from .serializers import UserRegisterSerializer, UserLoginSerializer
-# from .permissions import IsStaffOrCreateUser, UserPermissionOrReadOnly
+from .permissions import UserPermissionOrReadOnly
  
 class UserRegisterView(CreateAPIView):
     serializer_class = UserRegisterSerializer
-    # permission_classes = (IsStaffOrCreateUser, UserPermissionOrReadOnly)
+    permission_classes = UserPermissionOrReadOnly
  
 class UserLoginView(GenericAPIView):
     serializer_class = UserLoginSerializer
@@ -21,6 +21,6 @@ class UserLoginView(GenericAPIView):
         user = authenticate(request, username=username, password=password)
         if user:
             token = TokenModel.objects.get(user=user)
-            return Response({​​​​​​​​'key': token.key}​​​​​​​​, status=status.HTTP_201_CREATED)
+            return Response({'​​​​​​​​key': token.key}​​​​​​​​, status=status.HTTP_201_CREATED)
         return Response('invalid login', status=status.HTTP_401_UNAUTHORIZED)
 
