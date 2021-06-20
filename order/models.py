@@ -11,9 +11,7 @@ class Order(models.Model):
         ('R','Rejected')
     )
 
-    first_name = models.CharField('Имя', max_length=30)
-    last_name = models.CharField('Фамилия', max_length=60)
-    phone_number = models.CharField('Номер телефона', max_length=30)
+    customer = models.ForeignKey('users.User', models.CASCADE, 'orders_cust', null=True, blank=True)
     order_date = models.DateTimeField('Дата заказа', auto_now_add=True)
     address = models.CharField('Адресс', max_length=255)
     status = models.CharField('Статус', max_length=255, choices = CHOICES, default='N')
@@ -27,3 +25,8 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         self.total_price = self.get_total_price()
         super(Order, self).save()
+
+class OrderProduct(models.Model):
+    quantity = models.PositiveIntegerField('Количество', default=1)
+    product = models.ForeignKey('products.Product', models.CASCADE, 'orders')
+    order = models.ForeignKey(Order, models.CASCADE, 'product_order')
