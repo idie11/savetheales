@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'order',
     'django_filters',
     'corsheaders',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
