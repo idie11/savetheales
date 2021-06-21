@@ -14,7 +14,7 @@ class OrderView(ModelViewSet):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
     lookup_field = 'pk'
-    permission_classes = (IsUserOrReadOmly, IsAuthenticated)
+    # permission_classes = (IsUserOrReadOmly, IsAuthenticated)
 
     def get_total_price(self):
         return sum(self.quantity * self.product.price)
