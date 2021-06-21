@@ -2,6 +2,7 @@ from .models import Category, ProductImage, Product
 from rest_framework.viewsets import ModelViewSet
 from .serializers import CategorySerializer, ProductImageSerializer, ProductSerializer
 from django_filters import rest_framework as filters
+from .permissions import IsAdminOrReadOmly
 
 
 class ProductFilter(filters.FilterSet):
@@ -19,6 +20,7 @@ class ProductView(ModelViewSet):
     lookup_field = 'pk'
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = ProductFilter
+    permission_classes = (IsAdminOrReadOmly, )
 
 
 class CategoryView(ModelViewSet):
