@@ -20,7 +20,7 @@ class ProductView(ModelViewSet):
     lookup_field = 'pk'
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = ProductFilter
-    permission_classes = (IsAdminOrReadOmly, )
+    # permission_classes = (IsAdminOrReadOmly, )
 
 
 class CategoryView(ModelViewSet):
