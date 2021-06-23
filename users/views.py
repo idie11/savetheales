@@ -8,7 +8,7 @@ from .permissions import UserPermissionOrReadOnly
  
 class UserRegisterView(CreateAPIView):
     serializer_class = UserRegisterSerializer
-    permission_classes = UserPermissionOrReadOnly
+    permission_classes = (UserPermissionOrReadOnly, )
  
 class UserLoginView(GenericAPIView):
     serializer_class = UserLoginSerializer

@@ -10,13 +10,13 @@ class UserRegisterSerializer(serializers.Serializer):
     last_name = serializers.CharField()
     dob = serializers.DateField()
 
-def create(self, validated_data):
-    password = validated_data.pop('password')
-    user = User.objects.create(**validated_data)
-    user.set_password(password)
-    user.save()
-    TokenModel.objects.create(user=user)
-    return user
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User.objects.create(**validated_data)
+        user.set_password(password)
+        user.save()
+        TokenModel.objects.create(user=user)
+        return user
 
 
 class UserLoginSerializer(serializers.Serializer):

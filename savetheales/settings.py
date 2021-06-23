@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'products',
     'users',
     'rest_framework',
+    'rest_framework.authtoken',
     'order',
     'django_filters',
     'corsheaders',

@@ -4,4 +4,4 @@ class UserPermissionOrReadOnly(BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.method == 'GET':
             return True 
-        return obj == request.user or obj == request.is_staff
+        return obj == request.user
