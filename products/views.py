@@ -20,13 +20,14 @@ class ProductView(ModelViewSet):
     lookup_field = 'pk'
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = ProductFilter
-    # permission_classes = (IsAdminOrReadOmly, )
+    permission_classes = (IsAdminOrReadOmly, )
 
 
 class CategoryView(ModelViewSet):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
     lookup_field = 'pk'
+    permission_classes = (IsAdminOrReadOmly, )
     
 
 class ProductImageView(ModelViewSet):
