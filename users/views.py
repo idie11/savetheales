@@ -33,8 +33,6 @@ class UserLoginView(GenericAPIView):
     def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        print(serializer)
-        print(serializer.data.get('username'))
         user = authenticate(request, username=serializer.data.get('username'), password=serializer.data.get('password'))
         if user:
             refresh = RefreshToken.for_user(user)

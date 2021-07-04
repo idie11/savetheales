@@ -6,6 +6,8 @@ from .models import OrderProduct
 
 
 class OrdersProductsSerializer(serializers.ModelSerializer):
+
+    
     class Meta:
         model = Product
         fields = ('id', 'name', 'description','price')
@@ -13,6 +15,8 @@ class OrdersProductsSerializer(serializers.ModelSerializer):
 
 class OrderProductSerializer(serializers.ModelSerializer):
     product = OrdersProductsSerializer(read_only=True)
+
+
     class Meta:
         model = OrderProduct
         fields = ('id', 'quantity', 'product')
