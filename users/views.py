@@ -37,6 +37,8 @@ class UserLoginView(GenericAPIView):
         if user:
             refresh = RefreshToken.for_user(user)
             return Response(data={
+                'username': str(username),
+                'first_name': str(first_name),
                 'refresh': str(refresh),
                 'access': str(refresh.access_token)}
             )
