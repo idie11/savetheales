@@ -23,3 +23,12 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'description', 'price', 'is_instock', 'categories', 'images')
 
 
+    def update(self, instance, validated_data):
+        data = validated_data.copy()
+        data.pop('name','description', 'price', 'category','is_instock', 'images', None)
+        for attr, value, in data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance 
+
+

@@ -2,10 +2,12 @@ from django.contrib.auth import authenticate, get_user_model
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.response import Response
-from .serializers import UserRegisterSerializer, UserLoginSerializer
+from .serializers import UserRegisterSerializer, UserLoginSerializer, ReviewSerializer
 from .permissions import UserPermissionOrReadOnly
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import AllowAny
+from rest_framework.viewsets import ModelViewSet
+from .models import Review
 
 
 User = get_user_model()
@@ -44,3 +46,9 @@ class UserLoginView(GenericAPIView):
             data={'message': 'username or password is incorrect'},
             status=status.HTTP_401_UNAUTHORIZED
         )
+
+
+class ReviewView(ModelViewSet):
+    serializer_class = ReviewSerializer
+    queryset = Review.objects.all()
+    lookup_field = 'pk'

@@ -34,3 +34,8 @@ class User(AbstractUser):
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
+
+
+class Review(models.Model):
+    phone_number = models.IntegerField('Номер телефона')
+    text = models.TextField('Отзыв')

@@ -17,18 +17,18 @@ from django.db.models import F, Sum
 #         return '{}+{}'.format(self.product,  self.quantity)
 
 class Order(models.Model):
-    CHOICES = (
-        ('N','New'),
-        ('W','Waiting'),
-        ('O','On the way'),
-        ('M','Order_is_made'),
-        ('R','Rejected')
-    )
+    # CHOICES = (
+    #     ('N','New'),
+    #     ('W','Waiting'),
+    #     ('O','On the way'),
+    #     ('M','Order_is_made'),
+    #     ('R','Rejected')
+    # )
 
     customer = models.ForeignKey('users.User', models.CASCADE, 'orders_cust', null=True, blank=True)
     order_date = models.DateTimeField('Дата заказа', auto_now_add=True)
     address = models.CharField('Адресс', max_length=255)
-    status = models.CharField('Статус', max_length=255, choices = CHOICES, default='N')
+    # status = models.CharField('Статус', max_length=255, choices = CHOICES, default='N')
     total_price = models.DecimalField('Общая сумма', max_digits=10, decimal_places=2, null=True, blank=True, default=0)
 
 
@@ -40,7 +40,18 @@ class Order(models.Model):
         self.total_price = self.get_total_price()
         super(Order, self).save()
 
+    def __str__(self):
+        return self.address
+
 class OrderProduct(models.Model):
     quantity = models.PositiveIntegerField('Количество', default=1)
     product = models.ForeignKey('products.Product', models.CASCADE, 'orders')
     order = models.ForeignKey(Order, models.CASCADE, 'product_order')
+
+
+# class History_of_order(models.Model):
+#     order = models.ForeignKey(Order, models.CASCADE, 'order_history', null=True, blank=True)
+
+
+
+

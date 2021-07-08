@@ -1,8 +1,9 @@
+from reservations.views import ReservationView
 from django.conf.urls import url
 from users.views import UserLoginView, UserRegisterView
 from products.views import CategoryView, ProductView
 from about.views import ContactView
-from order.views import OrderView
+from order.views import OrderView, OrderProductView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -44,7 +45,10 @@ urlpatterns = [
     path('category/<int:pk>', CategoryView.as_view({'get':'retrieve'})),
     path('order/', OrderView.as_view({'get':'list'})),
     path('order/create', OrderView.as_view({'post':'create'})),
+    path('orderproduct/create', OrderProductView.as_view({'post':'create'})),
     path('order/<int:pk>', OrderView.as_view({'get':'retrieve'})),
+    path('reserve/create', ReservationView.as_view({'post':'create'})),
+    path('order/history', OrderView.as_view({'get':'list'}))
 
 ]
 

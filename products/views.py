@@ -3,6 +3,7 @@ from rest_framework.viewsets import ModelViewSet
 from .serializers import CategorySerializer, ProductImageSerializer, ProductSerializer
 from django_filters import rest_framework as filters
 from .permissions import IsAdminOrReadOmly
+from rest_framework import filters  as flt  
 
 
 class ProductFilter(filters.FilterSet):
@@ -21,6 +22,8 @@ class ProductView(ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = ProductFilter
     permission_classes = (IsAdminOrReadOmly, )
+    filter_backends = [flt.SearchFilter]
+    search_fields = ['name', 'category__name']
 
 
 class CategoryView(ModelViewSet):

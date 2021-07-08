@@ -5,6 +5,7 @@ from .models import Order
 from .models import OrderProduct
 
 
+
 class OrdersProductsSerializer(serializers.ModelSerializer):
 
     
@@ -14,28 +15,36 @@ class OrdersProductsSerializer(serializers.ModelSerializer):
 
 
 class OrderProductSerializer(serializers.ModelSerializer):
-    product = OrdersProductsSerializer(read_only=True)
+    #product = OrdersProductsSerializer()
 
 
     class Meta:
         model = OrderProduct
-        fields = ('id', 'quantity', 'product')
+        fields = ('id', 'quantity', 'product', 'order')
 
+    def create(self, validated_data):
+        order_product = OrderProduct.objects.create(**validated_data)
+        order = validated_data.get('order')
+        order.save()
+        return order_product
 
 
 class OrderSerializer(serializers.ModelSerializer):
     total_price = serializers.DecimalField(read_only=True,max_digits=10, decimal_places=2)
-    product = OrderProductSerializer(many=True, read_only=True)
+    order_product = OrderProductSerializer(many=True, read_only=True)
 
     class Meta:
         model = Order
-        fields = ('id', 'order_date', 'address', 'total_price', 'product', 'status')
+        fields = ('id', 'order_date', 'address', 'total_price', 'order_product')
 
     def create(self, validated_data):
         user = self.context.get('request').user
-        customer = User.objects.get(user=user)
-        order = Order.objects.create(customer=customer, **validated_data)
-        product = self.context.get('request').data.get('product')
-        for i in product:
-            OrderProduct.objects.create(product_id=i.get('product'), quantity=i.get('quantity'), order=order)
+        customer = user if user else None
+        if not customer.is_anonymous:
+            order = Order.objects.create(customer=customer, **validated_data)
+        else:
+            order = Order.objects.create(**validated_data)
         return order
+
+
+    

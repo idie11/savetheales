@@ -28,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+BOT_TOKEN='1894631679:AAFk3_qAbD6Sl7TT2NpvbeD3qhCR1H59BZ8'
+BOT_URL="https://api.tleegram.org/bot%s/"%BOT_TOKEN
+BOT_CHAT_ID="1894631679"
 
 # Application definition
 
@@ -47,6 +50,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'drf_yasg',
+    'reservations',
 ]
 
 MIDDLEWARE = [
@@ -150,8 +154,10 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-    ]
+    ],
+     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
+
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 OLD_PASSWORD_FIELD_ENABLED = True
