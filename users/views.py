@@ -16,6 +16,25 @@ User = get_user_model()
 class UserRegisterView(CreateAPIView):
     serializer_class = UserRegisterSerializer
     permission_classes = (UserPermissionOrReadOnly, )
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = User.objects.filter(username=serializer.data.get('username')).first()
+        # user = authenticate(request, username=serializer.data.get('username'), password=serializer.data.get('password'))
+        
+        if not user:
+            user = User.objects.create(username=serializer.data.get('username'))
+            user.set_password(serializer.data.get('password'))
+            refresh = RefreshToken.for_user(user)
+            return Response(data={
+                'refresh': str(refresh),
+                'access': str(refresh.access_token)}
+            )
+        return Response(
+            data={'message': 'username or password is incorrect'},
+            status=status.HTTP_401_UNAUTHORIZED
+        )
  
 class UserLoginView(GenericAPIView):
     permission_classes = (AllowAny,)
@@ -52,3 +71,4 @@ class ReviewView(ModelViewSet):
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
     lookup_field = 'pk'
+    permission_classes = (AllowAny, )
