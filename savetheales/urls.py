@@ -1,6 +1,6 @@
 from reservations.views import ReservationView
 from django.conf.urls import url
-from users.views import ReviewView, UserLoginView, UserRegisterView
+from users.views import ReviewView, UserLoginView, UserProfileView, UserRegisterView
 from products.views import CategoryView, ProductView
 from about.views import ContactView
 from order.views import OrderView, OrderProductView
@@ -38,6 +38,7 @@ urlpatterns = [
     path('api/v1/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/v1/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('api/v1/register/', UserRegisterView.as_view()),
+    path('profile/<int:pk>', UserProfileView.as_view({'get':'retrieve', 'put':'update', 'delete':'destroy'})),
     path('contacts/', ContactView.as_view({'get':'list'})),
     path('category/', CategoryView.as_view({'get':'list'})),
     path('product/', ProductView.as_view({'get':'list'})),

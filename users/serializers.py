@@ -1,3 +1,4 @@
+from django.db.models import fields
 from users.models import User
 from rest_framework import serializers
 from .models import Review
@@ -53,3 +54,11 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ('phone_number', 'text')
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'first_name', 'last_name', 'dob', 'phone_number', 'address', 'email')

@@ -49,9 +49,6 @@ class OrderProduct(models.Model):
     order = models.ForeignKey(Order, models.CASCADE, 'product_order')
 
 
-# class History_of_order(models.Model):
-#     order = models.ForeignKey(Order, models.CASCADE, 'order_history', null=True, blank=True)
-
 
 
 

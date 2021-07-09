@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.timezone import datetime
-from django.utils import timezone as tz
 
 
 
@@ -12,6 +11,7 @@ class Reserve(models.Model):
     reserve_datetime = models.DateTimeField('Дата и время')
     people_quantity = models.PositiveIntegerField('Количество людей')
     phone_number = models.PositiveIntegerField('Номер телефона')
+    comment = models.TextField('Комментарии к заказу', null=True, blank=True)
 
 
     def __str__(self):
